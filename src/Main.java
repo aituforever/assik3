@@ -37,7 +37,7 @@ public class Main {
                     String command = scanner.next();
                     System.out.flush();
                     System.out.println("Enter the destination: ");
-                    String where = scanner.next();//activity/measurement/goals
+                    String where = scanner.next();//activity/measurement/goal
                     System.out.flush();
                         switch(command){
                             case "create":
