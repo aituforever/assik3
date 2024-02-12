@@ -86,4 +86,26 @@ public class Goals extends TableCreate{
             System.out.println(e);
         }
     }
+    @Override
+    public void readRow(Connection conn) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter GoalID: ");
+        int GoalID = scanner.nextInt();
+        System.out.println("Enter required information to display: ");
+        String column_name = scanner.next();
+        String query = "SELECT "+ column_name +" FROM users WHERE goalid = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, GoalID);
+            ResultSet ans = statement.executeQuery();
+            if(ans.next()){
+                System.out.println(column_name+": "+ans.getString(column_name));
+            }
+            else{
+                System.out.println("No goal was found");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: "+e);
+        }
+    }
 }

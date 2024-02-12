@@ -93,4 +93,26 @@ public class Activities extends TableCreate{
         }
 
     }
+    @Override
+    public void readRow(Connection conn) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter ActivityID: ");
+        int ActivityID = scanner.nextInt();
+        System.out.println("Enter required information to display: ");
+        String column_name = scanner.next();
+        String query = "SELECT "+ column_name +" FROM users WHERE activityid = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, ActivityID);
+            ResultSet ans = statement.executeQuery();
+            if(ans.next()){
+                System.out.println(column_name+": "+ans.getString(column_name));
+            }
+            else{
+                System.out.println("No activity was found");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: "+e);
+        }
+    }
 }

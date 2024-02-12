@@ -9,7 +9,7 @@ public class Users extends TableCreate{
             Class.forName("org.postgresql.Driver");
             conn= (Connection) DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+aituforever,user,pass);
             if(conn!=null){
-                System.out.println("lol, working");
+                //System.out.println("lol, working");
             }
             else{
                 System.out.println("nah, working is not");
@@ -39,10 +39,10 @@ public class Users extends TableCreate{
     public void createRow(Connection conn){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter username:");
+        System.out.println("Create username:");
         String username = scanner.nextLine();
 
-        System.out.println("Enter password:");
+        System.out.println("Create password:");
         String password = scanner.nextLine();
 
         System.out.println("Enter first name:");
@@ -91,7 +91,7 @@ public class Users extends TableCreate{
             statement.setInt(1, UserID);
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error: "+e);
         }
     }
     @Override
@@ -111,7 +111,29 @@ public class Users extends TableCreate{
             statement.executeUpdate();
             System.out.println("Value has been changed");
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error: "+e);
+        }
+    }
+    @Override
+    public void readRow(Connection conn) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter UserID: ");
+        int UserID = scanner.nextInt();
+        System.out.println("Enter required information to display: ");
+        String column_name = scanner.next();
+        String query = "SELECT "+ column_name +" FROM users WHERE userid = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, UserID);
+            ResultSet ans = statement.executeQuery();
+            if(ans.next()){
+                System.out.println(column_name+": "+ans.getString(column_name));
+            }
+            else{
+                System.out.println("No user was found");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: "+e);
         }
     }
 }

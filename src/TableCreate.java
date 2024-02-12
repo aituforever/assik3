@@ -5,4 +5,5 @@ public abstract class TableCreate {
     public abstract void createRow(Connection conn);
     public abstract void deleteRow(Connection conn);
     public abstract void updateRow(Connection conn);
+    public abstract void readRow(Connection conn);
 }
